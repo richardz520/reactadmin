@@ -1,15 +1,21 @@
+import React, { Component } from "react";
 
-import React, { Component } from 'react'
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import { Button, message } from 'antd'
+import Admin from "./pages/admin/admin";
+import Login from "./pages/login/login";
+
 class App extends Component {
-  handleClick = () => {
-    message.success('成功啦...');
-  }
+  
   render() {
     return (
-      <Button type='primary' onClick={this.handleClick}>学习</Button>
-    )
+      <BrowserRouter>
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/" component={Admin} />
+        </Switch>
+      </BrowserRouter>
+    );
   }
 }
 
