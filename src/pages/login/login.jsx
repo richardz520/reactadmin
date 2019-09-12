@@ -1,18 +1,35 @@
 import React, { Component } from "react";
-import { Form, Input, Icon, Button } from "antd";
+import { Redirect } from 'react-router-dom'
+import { Form, Input, Icon, Button,message } from "antd";
 import "./login.less";
+import memoryUtils from '../../utils/memoryUtils'
+import storageUtils from '../../utils/storageUtils'
+import { reqLogin } from '../../api'
 
 class Login extends Component {
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields(async (err, { username, password }) => {
       if (!err) {
-        console.log("Received values of form: ", values);
+        const result = await reqLogin(username, password);
+        if (result.code === 200) {
+          const user = result.data;
+          storageUtils.saveUser(user);
+          memoryUtils.user = user;
+          this.props.history.replace("/");
+          message.success("登陆成功!");
+        } else {
+          message.error(result.message);
+        }
       }
     });
   };
   render() {
     const { getFieldDecorator } = this.props.form;
+    const user = memoryUtils.user
+    if (user.id) {
+      return <Redirect to="/" />
+    }
     return (
       <div>
         <div className="login">
@@ -63,4 +80,4 @@ class Login extends Component {
     );
   }
 }
-export default Form.create()(Login)
+export default Form.create()(Login);
