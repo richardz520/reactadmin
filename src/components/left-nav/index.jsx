@@ -18,6 +18,11 @@ const menuList = [
         title: "用户管理",
         key: "/user",
         icon: "user"
+      },
+      {
+        title: "菜单管理",
+        key: "/menu",
+        icon: "menu"
       }
     ]
   }
