@@ -18,7 +18,13 @@ axios.interceptors.request.use(function(config) {
 })
 
 axios.interceptors.response.use(function(response) {
-    return response.data
+    if (response.data.code === 200) {
+        return response.data
+    } else {
+        message.error(response.data.message)
+        return new Promise(() => {})
+    }
+
 }, function(error) {
     message.error('请求出错 ' + error.message)
     return new Promise(() => {})

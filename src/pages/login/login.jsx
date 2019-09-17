@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Redirect } from 'react-router-dom'
-import { Form, Input, Icon, Button,message } from "antd";
+import { Redirect } from "react-router-dom";
+import { Form, Input, Icon, Button, message } from "antd";
 import "./login.less";
-import memoryUtils from '../../utils/memoryUtils'
-import storageUtils from '../../utils/storageUtils'
-import { reqLogin } from '../../api'
+import memoryUtils from "../../utils/memoryUtils";
+import storageUtils from "../../utils/storageUtils";
+import { reqLogin } from "../../api";
 
 class Login extends Component {
   handleSubmit = e => {
@@ -12,23 +12,19 @@ class Login extends Component {
     this.props.form.validateFields(async (err, { username, password }) => {
       if (!err) {
         const result = await reqLogin(username, password);
-        if (result.code === 200) {
-          const user = result.data;
-          storageUtils.saveUser(user);
-          memoryUtils.user = user;
-          this.props.history.replace("/");
-          message.success("登陆成功!");
-        } else {
-          message.error(result.message);
-        }
+        const user = result.data;
+        storageUtils.saveUser(user);
+        memoryUtils.user = user;
+        this.props.history.replace("/");
+        message.success("登陆成功!");
       }
     });
   };
   render() {
     const { getFieldDecorator } = this.props.form;
-    const user = memoryUtils.user
+    const user = memoryUtils.user;
     if (user.id) {
-      return <Redirect to="/" />
+      return <Redirect to="/" />;
     }
     return (
       <div>

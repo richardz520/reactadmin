@@ -6,22 +6,22 @@ const { SubMenu } = Menu;
 const menuList = [
   {
     title: "首页",
-    key: "/home",
+    path: "/home",
     icon: "home"
   },
   {
     title: "系统管理",
-    key: "/sys",
+    path: "/sys",
     icon: "appstore",
     children: [
       {
         title: "用户管理",
-        key: "/user",
+        path: "/user",
         icon: "user"
       },
       {
         title: "菜单管理",
-        key: "/menu",
+        path: "/menu",
         icon: "menu"
       }
     ]
@@ -33,20 +33,20 @@ class LeftNav extends Component {
     return menuList.map(item => {
       if (!item.children) {
         return (
-          <Menu.Item key={item.key}>
-            <Link to={item.key}>
+          <Menu.Item key={item.path}>
+            <Link to={item.path}>
               <Icon type={item.icon} />
               <span>{item.title}</span>
             </Link>
           </Menu.Item>
         );
       } else {
-        if (item.children.find(cItem => path.indexOf(cItem.key) === 0)) {
-          this.openKey = item.key;
+        if (item.children.find(cItem => path.indexOf(cItem.path) === 0)) {
+          this.openKey = item.path;
         }
         return (
           <SubMenu
-            key={item.key}
+            key={item.path}
             title={
               <span>
                 <Icon type={item.icon} />
@@ -60,7 +60,7 @@ class LeftNav extends Component {
       }
     });
   };
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.menuNodes = this.getMenuNodes(menuList);
   }
   render() {

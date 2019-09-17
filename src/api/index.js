@@ -8,5 +8,19 @@ import md5 from "md5";
 
 const BASE = 'http://localhost:8080';
 const loginUrl = BASE + '/api/sys/login';
+const addMenuUrl = BASE + '/api/sys/menu/add';
+const menuListUrl = BASE + '/api/sys/menu/list';
 // 请求登陆
-export const reqLogin = (username, password) => ajax.post(loginUrl, { username, password: md5(password) })
+export const reqLogin = (username, password) => ajax.post(loginUrl, { username, password: md5(password) });
+//添加菜单
+export const reqAddMenu = (values) => ajax.post(addMenuUrl, {
+    title: values.title,
+    path: values.path,
+    component: values.component,
+    sort: values.sort,
+    icon: values.icon,
+    pid: values.pid,
+    remark: values.remark
+});
+//菜单列表
+export const reqMenuList = () => ajax.post(menuListUrl, {});
