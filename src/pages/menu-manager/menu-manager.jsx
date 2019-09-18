@@ -1,16 +1,17 @@
 import React, { Component } from "react";
-import { Table, Button, Divider } from "antd";
+import { Table, Button, Divider, Popconfirm, message } from "antd";
 import "./menu-manager.less";
 import MenuInfo from "../../components/menu-info/menu-info";
-import { reqMenuList } from "../../api";
+import { reqMenuList, reqDeleteMenu } from "../../api";
 
 export default class MenuManager extends Component {
   state = {
     menuInfoVisible: false,
-    menuInfo: [],
+    menuInfo: {},
     menuInfoTitle: "添加菜单",
     pId: 0,
-    menuList: []
+    menuList: [],
+    deleteBtnLoading: false
   };
   columns = [
     {
@@ -48,29 +49,62 @@ export default class MenuManager extends Component {
       key: "action",
       render: (text, record) => (
         <span>
-          <Button type="primary" onClick={() => this.editMenu(record.key)}>
+          <Button
+            icon="edit"
+            type="primary"
+            onClick={() => this.editMenu(record.key)}
+          >
             编辑
           </Button>
           <Divider type="vertical" />
-          <Button type="primary" onClick={() => this.addMenu(record.key)}>
+          <Button
+            icon="plus"
+            type="primary"
+            onClick={() => this.addMenu(record.key)}
+          >
             添加子菜单
           </Button>
           <Divider type="vertical" />
-          <Button type="danger" onClick={() => this.deleteMenu(record.key)}>
-            删除
-          </Button>
+          <Popconfirm
+            title="你确定要删除本菜单及其子菜单吗？"
+            onConfirm={() => this.confirmDelete(record.key)}
+            okText="是"
+            cancelText="否"
+          >
+            <Button
+              icon="delete"
+              type="danger"
+              loading={this.state.deleteBtnLoading}
+            >
+              删除
+            </Button>
+          </Popconfirm>
         </span>
       )
     }
   ];
-  deleteMenu = id => {};
+  deleteMenu = async id => {
+    await reqDeleteMenu(id);
+    this.setState({
+      deleteBtnLoading: false
+    });
+    message.success("删除成功！");
+    this.getMenuList();
+  };
+  confirmDelete = id => {
+    this.setState({
+      deleteBtnLoading: true
+    });
+    this.deleteMenu(id);
+  };
 
   editMenu = id => {};
   addMenu = id => {
     this.setState({
       menuInfoVisible: true,
       menuInfoTitle: "添加菜单",
-      pId: id
+      pId: id,
+      menuInfo:{title:""}
     });
   };
   handleCancel = () => {
@@ -91,14 +125,14 @@ export default class MenuManager extends Component {
     return (
       <div>
         <div className="AddMenuBtn">
-          <Button type="primary" onClick={() => this.addMenu(0)}>
+          <Button icon="plus" type="primary" onClick={() => this.addMenu(0)}>
             添加一级菜单
           </Button>
           <MenuInfo
             show={this.state.menuInfoVisible}
             handleCancel={this.handleCancel}
             menuInfo={this.state.menuInfo}
-            onSubmit={this.getMenuList}
+            refreshMenuList={this.getMenuList}
             pId={this.state.pId}
             title={this.state.menuInfoTitle}
           />

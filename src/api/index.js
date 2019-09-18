@@ -10,6 +10,7 @@ const BASE = 'http://localhost:8080';
 const loginUrl = BASE + '/api/sys/login';
 const addMenuUrl = BASE + '/api/sys/menu/add';
 const menuListUrl = BASE + '/api/sys/menu/list';
+const deleteMenuUrl = BASE + '/api/sys/menu/delete';
 // 请求登陆
 export const reqLogin = (username, password) => ajax.post(loginUrl, { username, password: md5(password) });
 //添加菜单
@@ -24,3 +25,5 @@ export const reqAddMenu = (values) => ajax.post(addMenuUrl, {
 });
 //菜单列表
 export const reqMenuList = () => ajax.post(menuListUrl, {});
+//删除菜单
+export const reqDeleteMenu = (id) => ajax.post(deleteMenuUrl, { id: id });

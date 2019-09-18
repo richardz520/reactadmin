@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Modal, Form, Input, message } from "antd";
+import { Modal, Form, Input, message,InputNumber } from "antd";
 import { reqAddMenu } from "../../api";
 class MenuInfo extends Component {
   state = {
-    confirmLoading: false
+    confirmLoading: false,
+    menuInfo: {}
   };
 
   handleOk = () => {
@@ -14,24 +15,24 @@ class MenuInfo extends Component {
         });
         values.pid = this.props.pId;
         await reqAddMenu(values);
-        message.success("添加成功！");
+        message.success("操作成功！");
+        this.setState({
+          menuInfo: { title: "" }
+        });
+        console.log(this.state.menuInfo.title);
         this.props.handleCancel();
-        this.props.onSubmit();
+        this.props.refreshMenuList();
         this.setState({
           confirmLoading: false
         });
       }
     });
   };
-  UNSAFE_componentWillMount() {
-    const { menuInfo } = this.props.menuInfo;
-    if (menuInfo) {
-      console.log(menuInfo);
-    }
-  }
+  UNSAFE_componentWillMount() {}
   render() {
     const { confirmLoading } = this.state;
     const { getFieldDecorator } = this.props.form;
+
     const formItemLayout = {
       labelCol: {
         xs: { span: 5 },
@@ -60,6 +61,7 @@ class MenuInfo extends Component {
           >
             <Form.Item label="标题">
               {getFieldDecorator("title", {
+                initialValue: this.state.menuInfo.title,
                 rules: [{ required: true, message: "请输入菜单标题！" }]
               })(<Input />)}
             </Form.Item>
@@ -74,7 +76,9 @@ class MenuInfo extends Component {
               })(<Input />)}
             </Form.Item>
             <Form.Item label="排序">
-              {getFieldDecorator("sort", {})(<Input />)}
+              {getFieldDecorator("sort", { initialValue: 1 })(
+                <InputNumber min={1} max={100} />
+              )}
             </Form.Item>
             <Form.Item label="图标">
               {getFieldDecorator("icon", {})(<Input />)}
