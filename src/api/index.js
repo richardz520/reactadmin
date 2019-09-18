@@ -8,13 +8,15 @@ import md5 from "md5";
 
 const BASE = 'http://localhost:8080';
 const loginUrl = BASE + '/api/sys/login';
-const addMenuUrl = BASE + '/api/sys/menu/add';
+const menuAddUrl = BASE + '/api/sys/menu/add';
 const menuListUrl = BASE + '/api/sys/menu/list';
-const deleteMenuUrl = BASE + '/api/sys/menu/delete';
+const menuDeleteUrl = BASE + '/api/sys/menu/delete';
+const menuDetailUrl = BASE + '/api/sys/menu/detail';
+const menuUpdateUrl = BASE + '/api/sys/menu/update';
 // 请求登陆
 export const reqLogin = (username, password) => ajax.post(loginUrl, { username, password: md5(password) });
 //添加菜单
-export const reqAddMenu = (values) => ajax.post(addMenuUrl, {
+export const reqMenuAdd = (values) => ajax.post(menuAddUrl, {
     title: values.title,
     path: values.path,
     component: values.component,
@@ -26,4 +28,17 @@ export const reqAddMenu = (values) => ajax.post(addMenuUrl, {
 //菜单列表
 export const reqMenuList = () => ajax.post(menuListUrl, {});
 //删除菜单
-export const reqDeleteMenu = (id) => ajax.post(deleteMenuUrl, { id: id });
+export const reqMenuDelete = (id) => ajax.post(menuDeleteUrl, { id: id });
+//查询菜单详情
+export const reqMenuDetail = (id) => ajax.post(menuDetailUrl, { id: id });
+//修改菜单
+export const reqMenuUpdate = (values) => ajax.post(menuUpdateUrl, {
+    id: values.id,
+    title: values.title,
+    path: values.path,
+    component: values.component,
+    sort: values.sort,
+    icon: values.icon,
+    pid: values.pid,
+    remark: values.remark
+});

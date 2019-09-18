@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Table, Button, Divider, Popconfirm, message } from "antd";
 import "./menu-manager.less";
 import MenuInfo from "../../components/menu-info/menu-info";
-import { reqMenuList, reqDeleteMenu } from "../../api";
+import { reqMenuList, reqMenuDelete, reqMenuDetail } from "../../api";
 
 export default class MenuManager extends Component {
   state = {
@@ -11,7 +11,9 @@ export default class MenuManager extends Component {
     menuInfoTitle: "添加菜单",
     pId: 0,
     menuList: [],
-    deleteBtnLoading: false
+    deleteBtnLoading: false,
+    editBtnLoading: false,
+    isAdd: true
   };
   columns = [
     {
@@ -52,6 +54,7 @@ export default class MenuManager extends Component {
           <Button
             icon="edit"
             type="primary"
+            loading={this.state.editBtnLoading}
             onClick={() => this.editMenu(record.key)}
           >
             编辑
@@ -84,7 +87,7 @@ export default class MenuManager extends Component {
     }
   ];
   deleteMenu = async id => {
-    await reqDeleteMenu(id);
+    await reqMenuDelete(id);
     this.setState({
       deleteBtnLoading: false
     });
@@ -98,13 +101,25 @@ export default class MenuManager extends Component {
     this.deleteMenu(id);
   };
 
-  editMenu = id => {};
+  editMenu = async id => {
+    this.setState({ editBtnLoading: true });
+    const result = await reqMenuDetail(id);
+    this.setState({
+      menuInfoVisible: true,
+      menuInfoTitle: "编辑菜单",
+      pId: result.data.pid,
+      menuInfo: result.data,
+      isAdd: false,
+      editBtnLoading: false
+    });
+  };
   addMenu = id => {
     this.setState({
       menuInfoVisible: true,
       menuInfoTitle: "添加菜单",
       pId: id,
-      menuInfo:{title:""}
+      menuInfo:{},
+      isAdd: true
     });
   };
   handleCancel = () => {
@@ -134,6 +149,7 @@ export default class MenuManager extends Component {
             menuInfo={this.state.menuInfo}
             refreshMenuList={this.getMenuList}
             pId={this.state.pId}
+            isAdd={this.state.isAdd}
             title={this.state.menuInfoTitle}
           />
         </div>
