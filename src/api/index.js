@@ -13,6 +13,11 @@ const menuListUrl = BASE + '/api/sys/menu/list';
 const menuDeleteUrl = BASE + '/api/sys/menu/delete';
 const menuDetailUrl = BASE + '/api/sys/menu/detail';
 const menuUpdateUrl = BASE + '/api/sys/menu/update';
+const roleAddUrl = BASE + '/api/sys/role/add';
+const roleListUrl = BASE + '/api/sys/role/list';
+const roleDeleteUrl = BASE + '/api/sys/role/delete';
+const roleDetailUrl = BASE + '/api/sys/role/detail';
+const roleUpdateUrl = BASE + '/api/sys/role/detail';
 // 请求登陆
 export const reqLogin = (username, password) => ajax.post(loginUrl, { username, password: md5(password) });
 //添加菜单
@@ -42,3 +47,13 @@ export const reqMenuUpdate = (values) => ajax.post(menuUpdateUrl, {
     pid: values.pid,
     remark: values.remark
 });
+//添加角色
+export const reqRoleAdd = (name, remark, menuIds) => ajax.post(roleAddUrl, { name: name, remark: remark, menuIds: menuIds });
+//角色列表
+export const reqRoleList = () => ajax.post(roleListUrl, {});
+//删除角色
+export const reqRoleDelete = (id) => ajax.post(roleDeleteUrl, { id: id });
+//查询角色详情
+export const reqRoleDetail = (id) => ajax.post(roleDetailUrl, { id: id });
+//更新角色
+export const reqRoleUpdate = (id, name, remark, menuIds) => ajax.post(roleAddUrl, { id: id, name: name, remark: remark, menuIds: menuIds });

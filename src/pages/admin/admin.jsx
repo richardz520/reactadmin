@@ -7,6 +7,7 @@ import UserAvatar from "../../components/user-avatar/user-avatar";
 import Home from "../home/home";
 import User from "../user/user";
 import MenuManager from "../menu-manager/menu-manager";
+import Role from "../role/role";
 import "./admin.less";
 
 const { Header, Sider, Content } = Layout;
@@ -58,6 +59,7 @@ export default class Admin extends Component {
               <Route path="/home" component={Home} />
               <Route path="/user" component={User} />
               <Route path="/menu" component={MenuManager} />
+              <Route path="/role" component={Role} />
               <Redirect to="/home" />
             </Switch>
           </Content>

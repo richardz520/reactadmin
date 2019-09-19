@@ -23,6 +23,11 @@ const menuList = [
         title: "菜单管理",
         path: "/menu",
         icon: "menu"
+      },
+      {
+        title: "角色管理",
+        path: "/role",
+        icon: "team"
       }
     ]
   }

@@ -22,18 +22,17 @@ class MenuInfo extends Component {
           message.success("修改成功！");
         }
         this.handleCancel();
-        this.props.refreshMenuList();
-        this.setState({
-          confirmLoading: false
-        });
       }
     });
   };
   handleCancel=()=>{
     this.props.form.resetFields();
     this.props.handleCancel();
+    this.props.refreshMenuList();
+    this.setState({
+      confirmLoading: false
+    });
   }
-  UNSAFE_componentWillMount() {}
   render() {
     const { confirmLoading } = this.state;
     const { getFieldDecorator } = this.props.form;
@@ -62,7 +61,6 @@ class MenuInfo extends Component {
           <Form
             {...formItemLayout}
             onSubmit={this.handleOk}
-            className="login-form"
           >
             <Form.Item label="标题">
               {getFieldDecorator("title", {

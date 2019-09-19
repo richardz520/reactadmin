@@ -19,43 +19,43 @@ export default class MenuManager extends Component {
     {
       title: "名称",
       dataIndex: "title",
-      key: "title"
+      id: "title"
     },
     {
       title: "路径",
       dataIndex: "path",
-      key: "path"
+      id: "path"
     },
     {
       title: "组件",
       dataIndex: "component",
-      key: "component"
+      id: "component"
     },
     {
       title: "排序",
       dataIndex: "sort",
-      key: "sort"
+      id: "sort"
     },
     {
       title: "图标",
       dataIndex: "icon",
-      key: "icon"
+      id: "icon"
     },
     {
       title: "备注",
       dataIndex: "remark",
-      key: "remark"
+      id: "remark"
     },
     {
       title: "操作",
-      key: "action",
+      id: "action",
       render: (text, record) => (
         <span>
           <Button
             icon="edit"
             type="primary"
             loading={this.state.editBtnLoading}
-            onClick={() => this.editMenu(record.key)}
+            onClick={() => this.editMenu(record.id)}
           >
             编辑
           </Button>
@@ -63,14 +63,14 @@ export default class MenuManager extends Component {
           <Button
             icon="plus"
             type="primary"
-            onClick={() => this.addMenu(record.key)}
+            onClick={() => this.addMenu(record.id)}
           >
             添加子菜单
           </Button>
           <Divider type="vertical" />
           <Popconfirm
             title="你确定要删除本菜单及其子菜单吗？"
-            onConfirm={() => this.confirmDelete(record.key)}
+            onConfirm={() => this.confirmDelete(record.id)}
             okText="是"
             cancelText="否"
           >
@@ -118,7 +118,7 @@ export default class MenuManager extends Component {
       menuInfoVisible: true,
       menuInfoTitle: "添加菜单",
       pId: id,
-      menuInfo:{},
+      menuInfo: {},
       isAdd: true
     });
   };
@@ -153,7 +153,12 @@ export default class MenuManager extends Component {
             title={this.state.menuInfoTitle}
           />
         </div>
-        <Table columns={this.columns} dataSource={this.state.menuList} />;
+        <Table
+          columns={this.columns}
+          dataSource={this.state.menuList}
+          pagination={false}
+          rowKey={'id'}
+        />
       </div>
     );
   }
