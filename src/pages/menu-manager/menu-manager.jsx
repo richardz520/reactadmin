@@ -139,7 +139,7 @@ export default class MenuManager extends Component {
   render() {
     return (
       <div>
-        <div className="AddMenuBtn">
+        <div className="AddBtn">
           <Button icon="plus" type="primary" onClick={() => this.addMenu(0)}>
             添加一级菜单
           </Button>

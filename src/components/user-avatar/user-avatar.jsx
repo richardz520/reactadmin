@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Avatar, Menu, Dropdown, Icon } from "antd";
 import memoryUtils from "../../utils/memoryUtils";
+import {headBaseUrl} from "../../api"
 const menu = (
   <Menu>
     <Menu.Item key="0">
@@ -17,7 +18,7 @@ export default class UserAvatar extends Component {
       <div>
         <Avatar
           size={48}
-          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+          src={headBaseUrl+user.headimg}
         />
         <Dropdown overlay={menu} trigger={["click"]}>
           <span className="ant-dropdown-link" style={{ cursor: "pointer" }}>

@@ -24,7 +24,7 @@ class RoleInfo extends Component {
   UNSAFE_componentWillMount() {
     this.getMeunList();
   }
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({
       selectedRowKeys: nextProps.roleInfo.menuList || []
     });

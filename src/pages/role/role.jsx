@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Table, Button, Divider, Popconfirm, message } from "antd";
 import moment from "moment";
-import Rolenfo from "../../components/role-info/role-info";
+import RoleInfo from "../../components/role-info/role-info";
 import { reqRoleList, reqRoleDelete,reqRoleDetail } from "../../api";
 export default class Role extends Component {
   columns = [
@@ -114,11 +114,11 @@ export default class Role extends Component {
   render() {
     return (
       <div>
-        <div className="AddMenuBtn">
+        <div className="AddBtn">
           <Button icon="plus" type="primary" onClick={() => this.addRole()}>
             添加角色
           </Button>
-          <Rolenfo
+          <RoleInfo
             show={this.state.roleInfoVisible}
             handleCancel={this.handleCancel}
             roleInfo={this.state.roleInfo}
