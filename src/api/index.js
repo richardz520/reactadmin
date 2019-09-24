@@ -9,6 +9,7 @@ import md5 from "md5";
 const BASE = 'http://localhost:8080';
 
 const loginUrl = BASE + '/api/sys/login';
+const logoutUrl = BASE + '/api/sys/logout';
 
 const menuAddUrl = BASE + '/api/sys/menu/add';
 const menuListUrl = BASE + '/api/sys/menu/list';
@@ -27,12 +28,17 @@ const userListUrl = BASE + '/api/sys/user/list';
 const userDeleteUrl = BASE + '/api/sys/user/delete';
 const userDetailUrl = BASE + '/api/sys/user/detail';
 const userUpdateUrl = BASE + '/api/sys/user/update';
+const userUpdatePwdUrl = BASE + '/api/sys/user/updatePwd';
+
 
 export const headBaseUrl = BASE + "/api/sys/image/";
 export const imageUploadUrl = BASE + "/api/sys/upLoadPic";
 
 // 请求登陆
 export const reqLogin = (username, password) => ajax.post(loginUrl, { username, password: md5(password) });
+//注销
+export const reqLogout = () => ajax.post(logoutUrl, {});
+
 //添加菜单
 export const reqMenuAdd = (values) => ajax.post(menuAddUrl, {
     title: values.title,
@@ -91,6 +97,8 @@ export const reqUserList = (page, size) => ajax.post(userListUrl, {
 export const reqUserDelete = (id) => ajax.post(userDeleteUrl, { id: id });
 //查询用户详情
 export const reqUserDetail = (id) => ajax.post(userDetailUrl, { id: id });
+//修改用户密码
+export const reqUserUpdatePwd = (pwd) => ajax.post(userUpdatePwdUrl, { pwd: md5(pwd) });
 //修改用户
 export const reqUserUpdate = (values) => ajax.post(userUpdateUrl, {
     id: values.id,

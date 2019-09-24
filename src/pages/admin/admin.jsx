@@ -11,10 +11,11 @@ import Role from "../role/role";
 import "./admin.less";
 
 const { Header, Sider, Content } = Layout;
-const user = memoryUtils.user;
-function isAuthenticated(x) {
+
+function isAuthenticated(path) {
+  var user =memoryUtils.user;
   for (var i = 0; i < user.pathList.length; i++) {
-    if (user.pathList[i].path === x) {
+    if (user.pathList[i].path === path) {
       return true;
     }
   }
@@ -52,6 +53,7 @@ export default class Admin extends Component {
   };
 
   render() {
+    const user = memoryUtils.user;
     if (!user.id) {
       return <Redirect to="/login" />;
     }
