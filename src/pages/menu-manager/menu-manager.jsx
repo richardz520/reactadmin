@@ -32,6 +32,12 @@ export default class MenuManager extends Component {
       id: "component"
     },
     {
+      title: "类型",
+      dataIndex: "isLink",
+      id: "isLink",
+      render: val => <span>{val === 1 ? "有路由" : "无路由"}</span>
+    },
+    {
       title: "排序",
       dataIndex: "sort",
       id: "sort"
@@ -157,7 +163,7 @@ export default class MenuManager extends Component {
           columns={this.columns}
           dataSource={this.state.menuList}
           pagination={false}
-          rowKey={'id'}
+          rowKey={"id"}
         />
       </div>
     );

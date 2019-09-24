@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Modal, Form, Input, message, InputNumber } from "antd";
+import { Modal, Form, Input, message, InputNumber,Select } from "antd";
 import { reqMenuAdd, reqMenuUpdate } from "../../api";
+const { Option } = Select;
 class MenuInfo extends Component {
   state = {
     confirmLoading: false
@@ -36,7 +37,7 @@ class MenuInfo extends Component {
   render() {
     const { confirmLoading } = this.state;
     const { getFieldDecorator } = this.props.form;
-    const { title, path, component, sort, icon, remark } = this.props.menuInfo;
+    const { title, path, component, sort, icon, remark ,isLink} = this.props.menuInfo;
     const formItemLayout = {
       labelCol: {
         xs: { span: 5 },
@@ -80,6 +81,17 @@ class MenuInfo extends Component {
                 rules: [{ required: true, message: "请输入组件名称！" }]
               })(<Input />)}
             </Form.Item>
+            <Form.Item label="类型">
+            {getFieldDecorator("isLink", {
+                initialValue: isLink || "0",
+                rules: [{ required: true, message: "请选择类型!" }]
+              })(
+                <Select>
+                  <Option value="1">有路由</Option>
+                  <Option value="0">无路由</Option>
+                </Select>
+              )}
+               </Form.Item>
             <Form.Item label="排序">
               {getFieldDecorator("sort", { initialValue: sort || 1 })(
                 <InputNumber min={1} max={100} />

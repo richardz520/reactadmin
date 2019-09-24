@@ -9,6 +9,7 @@ import User from "../user/user";
 import MenuManager from "../menu-manager/menu-manager";
 import Role from "../role/role";
 import "./admin.less";
+import Item from "antd/lib/list/Item";
 
 const { Header, Sider, Content } = Layout;
 
@@ -56,6 +57,11 @@ export default class Admin extends Component {
             }}
           >
             <Switch>
+            user.pathList.map(item=>
+            {
+               <Route path= {item.path} component={item.component}/>
+
+            })
               <Route path="/home" component={Home} />
               <Route path="/user" component={User} />
               <Route path="/menu" component={MenuManager} />

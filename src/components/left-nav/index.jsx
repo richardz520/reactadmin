@@ -1,37 +1,10 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Menu, Icon } from "antd";
+import memoryUtils from "../../utils/memoryUtils"
 import "./index.less";
 const { SubMenu } = Menu;
-const menuList = [
-  {
-    title: "首页",
-    path: "/home",
-    icon: "home"
-  },
-  {
-    title: "系统管理",
-    path: "/sys",
-    icon: "appstore",
-    children: [
-      {
-        title: "用户管理",
-        path: "/user",
-        icon: "user"
-      },
-      {
-        title: "菜单管理",
-        path: "/menu",
-        icon: "menu"
-      },
-      {
-        title: "角色管理",
-        path: "/role",
-        icon: "team"
-      }
-    ]
-  }
-];
+
 class LeftNav extends Component {
   getMenuNodes = menuList => {
     const path = this.props.location.pathname;
@@ -66,7 +39,8 @@ class LeftNav extends Component {
     });
   };
   UNSAFE_componentWillMount() {
-    this.menuNodes = this.getMenuNodes(menuList);
+    
+    this.menuNodes = this.getMenuNodes(memoryUtils.user.menuList||[]);
   }
   render() {
     const selectKey = this.props.location.pathname;

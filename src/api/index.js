@@ -41,7 +41,8 @@ export const reqMenuAdd = (values) => ajax.post(menuAddUrl, {
     sort: values.sort,
     icon: values.icon,
     pid: values.pid,
-    remark: values.remark
+    remark: values.remark,
+    isLink: values.isLink
 });
 //菜单列表
 export const reqMenuList = () => ajax.post(menuListUrl, {});
@@ -58,7 +59,8 @@ export const reqMenuUpdate = (values) => ajax.post(menuUpdateUrl, {
     sort: values.sort,
     icon: values.icon,
     pid: values.pid,
-    remark: values.remark
+    remark: values.remark,
+    isLink: values.isLink
 });
 //添加角色
 export const reqRoleAdd = (name, remark, menuIds) => ajax.post(roleAddUrl, { name: name, remark: remark, menuIds: menuIds });
