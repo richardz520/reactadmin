@@ -9,9 +9,36 @@ import User from "../user/user";
 import MenuManager from "../menu-manager/menu-manager";
 import Role from "../role/role";
 import "./admin.less";
-import Item from "antd/lib/list/Item";
 
 const { Header, Sider, Content } = Layout;
+const user = memoryUtils.user;
+function isAuthenticated(x) {
+  for (var i = 0; i < user.pathList.length; i++) {
+    if (user.pathList[i].path === x) {
+      return true;
+    }
+  }
+  return false;
+}
+function PrivateRoute({ component: Component, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        isAuthenticated(props.match.path) ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: props.location }
+            }}
+          />
+        )
+      }
+    />
+  );
+}
 
 export default class Admin extends Component {
   state = {
@@ -25,7 +52,6 @@ export default class Admin extends Component {
   };
 
   render() {
-    const user = memoryUtils.user;
     if (!user.id) {
       return <Redirect to="/login" />;
     }
@@ -57,15 +83,10 @@ export default class Admin extends Component {
             }}
           >
             <Switch>
-            user.pathList.map(item=>
-            {
-               <Route path= {item.path} component={item.component}/>
-
-            })
-              <Route path="/home" component={Home} />
-              <Route path="/user" component={User} />
-              <Route path="/menu" component={MenuManager} />
-              <Route path="/role" component={Role} />
+              <PrivateRoute path="/home" component={Home} />
+              <PrivateRoute path="/user" component={User} />
+              <PrivateRoute path="/menu" component={MenuManager} />
+              <PrivateRoute path="/role" component={Role} /> 
               <Redirect to="/home" />
             </Switch>
           </Content>
