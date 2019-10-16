@@ -83,12 +83,12 @@ class MenuInfo extends Component {
             </Form.Item>
             <Form.Item label="类型">
             {getFieldDecorator("isLink", {
-                initialValue: isLink || "0",
+                initialValue: isLink || 0,
                 rules: [{ required: true, message: "请选择类型!" }]
               })(
                 <Select>
-                  <Option value="1">有路由</Option>
-                  <Option value="0">无路由</Option>
+                  <Option value={1}>有路由</Option>
+                  <Option value={0}>无路由</Option>
                 </Select>
               )}
                </Form.Item>

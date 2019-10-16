@@ -135,12 +135,12 @@ class UserInfo extends Component {
             </Form.Item>
             <Form.Item label="状态">
               {getFieldDecorator("status", {
-                initialValue: status || "1",
+                initialValue: status || 1,
                 rules: [{ required: true, message: "请选择状态!" }]
               })(
                 <Select>
-                  <Option value="1">正常</Option>
-                  <Option value="0">禁用</Option>
+                  <Option value={1}>正常</Option>
+                  <Option value={0}>禁用</Option>
                 </Select>
               )}
             </Form.Item>
